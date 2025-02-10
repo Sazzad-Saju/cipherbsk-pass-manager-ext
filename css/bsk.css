@@ -1,0 +1,131 @@
+.bigBar {
+    background: linear-gradient(to right, #000000, #616161);
+    color: white;
+    overflow: hidden;
+    border-bottom: 3px solid #3777a3;
+}
+
+.bigBar2 {
+    background: linear-gradient(to right, #000000, #616161);
+    color: white;
+    overflow: hidden;
+    border-top: 3px solid #3777a3;
+    line-height: 1.5em;
+}
+
+.img-logo {
+    height: 100px;
+    background-size: contain;
+    margin-right: 20px;
+    width: auto;
+    position: relative;
+}
+
+.proj-body {
+    background-color: #E0EBF5;
+}
+
+.highlight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.diffHeader {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.blue {
+    color: #3777a3;
+}
+
+.btn {
+    background-color: #3777a3;
+    color: white;
+}
+
+.btn:hover {
+    color: white;
+    border: 2px solid white;
+    outline: 2px solid lightgray;
+    background-color: #265c80;
+}
+
+.pad {
+    padding-bottom: 2rem;
+}
+
+.sm-pad {
+    padding-bottom: 1.25rem;
+}
+
+.sm-pad-top {
+    padding-top: 1.25rem;
+}
+
+.xsm-pad {
+    padding-bottom: 0.75rem;
+}
+
+.justify-cont {
+    text-align: justify;
+}
+
+.icon i {
+    transition: .5s;
+    -webkit-transition: rotate(-60deg);
+}
+
+.icon i:hover {
+    transition: .5s;
+    transform: rotate(60deg);
+    color: white;
+}
+
+#passErr {
+    display: none;
+}
+
+.correct {
+    border: 2px solid green;
+    color: green;
+}
+
+.wrong {
+    border: 2px solid red;
+    color: red;
+}
+
+.wrong:focus {
+    outline: none;
+    border: 2px solid red;
+    color: red;
+}
+
+.textAreaTitle {
+    display: inline;
+    vertical-align: middle;
+}
+
+.copyButt {
+    display: inline;
+    float: right;
+    vertical-align: middle;
+}
+
+.padTitleDown {
+    padding-bottom: 20px;
+}
+
+.w-20{
+    width: 20px;
+}
+

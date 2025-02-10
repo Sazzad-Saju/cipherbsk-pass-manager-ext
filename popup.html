@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIPHER BSK</title>
+     <link rel="stylesheet" href="css/bootstrap-custom.css">
+    <link rel="stylesheet" href="css/bsk.css">
+    <link rel="shortcut icon" type="image/png" href="img//bsk_icon.png">
+</head>
+
+<body>
+    <div class="container-fluid bigBar py-4">
+        <div class="container">
+            <div class="d-flex">
+                <div>
+                    <img src="img/bsk_logo.png" alt="" class="img-logo">
+                </div>
+                <div>
+                    <h1>Cipher BSK</h1>
+                    <h5 class="blue">Online Encryption Tool</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid proj-body">
+        <div class="container pad">
+            <div class="row pt-4 pad">
+                <div class="col">
+                    <div class="padTitleDown">
+                        <h5 class="diffHeader textAreaTitle">Type Plaintext or Ciphertext: </h5>
+                        <a class="copyButt"> </a>
+                    </div>
+                    <textarea id="message" name="txt" rows="3" style="width: 100%" class="form-control"></textarea>
+                    <h5>Password: </h5>
+                    <input type="password" class="form-control" style="width: 100%;" id="pass">
+                    <small class="text-danger" id="passErr">Minimum 8 character including an alphabet, a digit and or a special character</small>
+
+                    <div class="row pt-4">
+                        <div class="col-6">
+                            <div class="d-grid gap-2 col-12 mx-auto">
+                                <button class="btn btn-lg" type="button" id="encrypt">Encrypt</button>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-grid gap-2 col-12 mx-auto">
+                                <button class="btn btn-lg" type="button" id="decrypt">Decrypt</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/keyGen.js"></script>
+    <script src="js/encrypt.js"></script>
+    <script src="js/decrypt.js"></script>
+    <script src="js/bsk.js"></script>
+
+</body>
+
+</html>
