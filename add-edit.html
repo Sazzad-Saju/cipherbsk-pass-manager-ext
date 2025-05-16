@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIPHER BSK - Login</title>
+    <link rel="stylesheet" href="css/bootstrap-custom.css">
+    <link rel="stylesheet" href="css/bsk.css">
+    <link rel="shortcut icon" type="image/png" href="img/bsk_icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+    <div>
+        <div class="container-fluid bigBar py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <img src="img/bsk_logo.png" alt="Logo" class="img-logo">
+                    </div>
+                    <div>
+                        <h1>Cipher BSK</h1>
+                        <h5 class="blue">Password Manager</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid proj-body add-edit">
+            <div class="container pad">
+                <div class="row pt-4 pad">
+                    <div class="col">
+                        <div class="text-center">
+                            <h5 class="diffHeader textAreaTitle ">Add/Edit Items</h5>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <p>Name: </p>
+                                <input type="text" class="form-control" style="width: 100%;" id="item_name">
+
+                                <p>Link: </p>
+                                <input type="text" class="form-control" style="width: 100%;" id="item_name">
+
+                                <p>Username: </p>
+                                <input type="text" class="form-control" style="width: 100%;" id="item_name">
+
+                                <p>Password: </p>
+                                <input type="text" class="form-control" style="width: 100%;" id="item_name">
+
+                                <p>Note: </p>
+                                <textarea id="message" name="txt" rows="3" style="width: 100%"
+                                    class="form-control"></textarea>
+
+                                <div class="row pt-4">
+                                    <div class="col-6">
+                                        <div class="d-grid gap-2 col-12 mx-auto">
+                                            <button class="btn btn-lg" type="button" id="encrypt">Encrypt</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-grid gap-2 col-12 mx-auto">
+                                            <button class="btn btn-lg" type="button" id="decrypt">Decrypt</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-10 text-center">
+                                    <div class="col">
+                                        <div class="d-grid gap-2 col-12 mx-auto">
+                                            <button class="btn btn-lg" type="button" id="decrypt">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt_25">
+                    <div class="col text-center">
+                        <a href="#" class="footer-link mx-2">Home</a> |
+                        <a href="#" class="footer-link mx-2">About</a> |
+                        <a href="#" class="footer-link mx-2">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        // Toggle between Login/Register UI
+        document.addEventListener("DOMContentLoaded", function () {
+            const formTitle = document.getElementById("formTitle");
+            const loginBtn = document.getElementById("loginBtn");
+            const toggleRegister = document.getElementById("toggleRegister");
+
+            let isRegister = false;
+
+            toggleRegister.addEventListener("click", function (e) {
+                e.preventDefault();
+                isRegister = !isRegister;
+                formTitle.textContent = isRegister ? "Register" : "Login";
+                loginBtn.textContent = isRegister ? "Register" : "Login";
+                toggleRegister.textContent = isRegister
+                    ? "Already have an account? Login"
+                    : "Don't have an account? Register";
+            });
+
+            // Password visibility toggle
+            const passwordInput = document.getElementById("pass");
+            const passwordConfirmInput = document.getElementById("pass_confirm");
+            const togglePassword = document.getElementById("togglePassword");
+
+
+            togglePassword.addEventListener("click", function () {
+                const isPassword = passwordInput.type === "password";
+                passwordInput.type = isPassword ? "text" : "password";
+                const isPasswordConfirm = passwordConfirmInput.type === "password";
+                passwordConfirmInput.type = isPasswordConfirm ? "text" : "password";
+                togglePassword.classList.toggle("fa-eye");
+                togglePassword.classList.toggle("fa-eye-slash");
+            });
+        });
+    </script>
+
+    <!-- Placeholder for future logic -->
+    <script src="js/login.js"></script>
+    <script src="js/bsk.js"></script>
+</body>
+
+</html>

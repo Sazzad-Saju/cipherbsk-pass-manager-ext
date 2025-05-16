@@ -1,3 +1,7 @@
+body, input, button, textarea, select {
+    font-family: 'Inter', sans-serif;
+}
+
 .bigBar {
     background: linear-gradient(to right, #000000, #616161);
     color: white;
@@ -121,11 +125,114 @@ a:hover {
     vertical-align: middle;
 }
 
-.padTitleDown {
+.pb_20 {
     padding-bottom: 20px;
+}
+
+.mt-5{
+    margin-top: 5px;
+}
+.mb-5{
+    margin-bottom: 5px;
+}
+
+.mt-10{
+    margin-top: 10px;
+}
+
+.mt_25{
+    margin-top: 25px;
+}
+
+.mb-20{
+    margin-bottom: 20px;
 }
 
 .w-20{
     width: 20px;
 }
 
+.w-250{
+    width: 250px!important;
+}
+
+
+
+.footer-link{
+    color: #000;
+}
+
+.links {
+    color: #004c81;
+}
+
+/* login */
+
+.login #togglePassword{
+    position: absolute;
+    right: 20px;
+    bottom: 11px;
+    cursor: pointer;
+}
+
+
+/* register */
+.register #togglePassword{
+    position: absolute;
+    right: 20px;
+    bottom: 114px;
+    cursor: pointer;
+}
+
+/* dashboard */
+.dashboard .item_list{
+    gap: 5px;
+    justify-content: center;
+}
+
+.dashboard .item {
+    width: 175px;
+    font-size: 14px;
+    background-color: #3777a354;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.dashboard .item:hover {
+    background-color: #3777a3;
+    color: white;
+}
+
+.dashboard button {
+    cursor: pointer;
+    border: none;
+    font-size: 12px;
+    color: white;
+    border-radius: 10px;
+    padding: 2px;
+}
+
+.dashboard button:hover {
+    border: none;
+}
+
+.dashboard .scroll-wrapper {
+  max-height: 460px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Optional: smoother scrolling */
+.dashboard .scroll-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+.dashboard .scroll-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* add/edit */
+.add-edit p{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

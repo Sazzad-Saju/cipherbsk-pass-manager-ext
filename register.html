@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CIPHER BSK - Password Manager</title>
-     <link rel="stylesheet" href="css/bootstrap-custom.css">
+    <link rel="stylesheet" href="css/bootstrap-custom.css">
     <link rel="stylesheet" href="css/bsk.css">
-    <link rel="shortcut icon" type="image/png" href="img//bsk_icon.png">
+    <link rel="shortcut icon" type="image/png" href="img/bsk_icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
@@ -39,7 +40,6 @@
                     
                         <h5>Email: </h5>
                         <input type="text" class="form-control" style="width: 100%;" id="email">
-                        <small class="text-danger" id="passErr">Invalid Credential</small>
                         
                         <h5>Master Password: </h5>
                         <input type="password" class="form-control" style="width: 100%;" id="pass">
@@ -72,14 +72,45 @@
             </div>
         </div>
     </div>
-    
-    <script src="js/keyGen.js"></script>
-    <script src="js/encrypt.js"></script>
-    <script src="js/decrypt.js"></script>
-    <script src="js/bsk.js"></script>
-    
-    <script src="js/auth.js"></script>
+    <script>
+        // Toggle between Login/Register UI
+        document.addEventListener("DOMContentLoaded", function () {
+            const formTitle = document.getElementById("formTitle");
+            const loginBtn = document.getElementById("loginBtn");
+            const toggleRegister = document.getElementById("toggleRegister");
 
+            let isRegister = false;
+
+            toggleRegister.addEventListener("click", function (e) {
+                e.preventDefault();
+                isRegister = !isRegister;
+                formTitle.textContent = isRegister ? "Register" : "Login";
+                loginBtn.textContent = isRegister ? "Register" : "Login";
+                toggleRegister.textContent = isRegister
+                    ? "Already have an account? Login"
+                    : "Don't have an account? Register";
+            });
+            
+            // Password visibility toggle
+            const passwordInput = document.getElementById("pass");
+            const passwordConfirmInput = document.getElementById("pass_confirm");
+            const togglePassword = document.getElementById("togglePassword");
+            
+
+            togglePassword.addEventListener("click", function () {
+                const isPassword = passwordInput.type === "password";
+                passwordInput.type = isPassword ? "text" : "password";
+                const isPasswordConfirm = passwordConfirmInput.type === "password";
+                passwordConfirmInput.type = isPasswordConfirm ? "text" : "password";
+                togglePassword.classList.toggle("fa-eye");
+                togglePassword.classList.toggle("fa-eye-slash");
+            });
+        });
+    </script>
+
+    <!-- Placeholder for future logic -->
+    <script src="js/login.js"></script>
+    <script src="js/bsk.js"></script>
 </body>
 
 </html>
