@@ -21,9 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const registerPage = document.querySelector(".registerPage");
   const dashboardPage = document.querySelector(".dashboardPage");
   const addEditPage = document.querySelector(".addEditPage");
+  const generatePage = document.querySelector(".generatePage");
+  const aboutPage = document.querySelector(".aboutPage");
+  const privacyPage = document.querySelector(".privacyPolicyPage");
 
   function showPage(pageToShow) {
-    const pages = [loginPage, registerPage, dashboardPage, addEditPage];
+    const pages = [loginPage, registerPage, dashboardPage, addEditPage, generatePage, aboutPage, privacyPage];
     pages.forEach(page => {
       if (page) {
         page.style.display = (page === pageToShow) ? "block" : "none";
@@ -65,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         showPage(loginPage);
       });
   }
-  
+
   document.getElementById("closeCopyModalBtn").addEventListener("click", () => {
     document.getElementById("copyModal").style.display = "none";
   });
@@ -187,14 +190,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     });
-    
+
     //copy email: 
     document.querySelectorAll(".user-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const itemId = btn.getAttribute("data-id");
         const items = JSON.parse(localStorage.getItem("customer_items") || "[]");
         const item = items.find(i => i.id == itemId);
-        
+
         if (!item || !item.email) {
           showCopyModal("No email found for this item.");
           return;
@@ -212,11 +215,11 @@ document.addEventListener("DOMContentLoaded", () => {
           try {
             const rounds = parseInt(item.en_round) || 1;
             let decrypted = item.email;
-            
+
             for (let i = 0; i < rounds; i++) {
               decrypted = bskDecrypt(decrypted, masterPassword);
             }
-            
+
             navigator.clipboard.writeText(decrypted)
               .then(() => {
                 showCopyModal("Username copied to clipboard!");
@@ -238,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const itemId = btn.getAttribute("data-id");
         const items = JSON.parse(localStorage.getItem("customer_items") || "[]");
         const item = items.find(i => i.id == itemId);
-        
+
         if (!item || !item.email) {
           showCopyModal("No email found for this item.");
           return;
@@ -254,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           try {
-             const rounds = parseInt(item.en_round) || 1;
+            const rounds = parseInt(item.en_round) || 1;
             let decrypted = item.password;
             for (let i = 0; i < rounds; i++) {
               decrypted = bskDecrypt(decrypted, masterPassword);
@@ -319,6 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const encryptButton = document.querySelector("#encryptBtn");
   const decryptButton = document.querySelector("#decryptBtn");
   const saveButton = document.querySelector("#saveBtn");
+  const goToGenerate = document.querySelector("#goToGenerate");
 
   if (loginButton) {
     loginButton.addEventListener("click", async () => {
@@ -474,6 +478,84 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  if (goToGenerate) {
+    goToGenerate.addEventListener("click", () => {
+      showPage(generatePage);
+    });
+  }
+
+  // generate passwords: 
+  const lengthInput = document.getElementById('lengthInput');
+  const lengthSlider = document.getElementById('lengthSlider');
+  const generateBtn = document.getElementById('generateBtn');
+  const generatedPassword = document.getElementById('generatedPassword');
+  const outputSection = document.getElementById('outputSection');
+  const copyBtn = document.getElementById('copyBtn');
+
+
+  lengthSlider.addEventListener('input', () => {
+    lengthInput.value = lengthSlider.value;
+  });
+
+  lengthInput.addEventListener('input', () => {
+    let val = parseInt(lengthInput.value);
+
+    if (isNaN(val) || val < 1) val = 1;
+    if (val > 99) val = 99;
+
+    lengthInput.value = val;
+    lengthSlider.value = val;
+  });
+
+  function generatePassword(length) {
+    const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lower = 'abcdefghijklmnopqrstuvwxyz';
+    const numbers = '0123456789';
+    const chars = upper + lower + numbers;
+
+    let password = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      password += chars[randomIndex];
+    }
+    return password;
+  }
+
+  generateBtn.addEventListener('click', () => {
+    const length = parseInt(document.getElementById('lengthInput').value);
+    if (isNaN(length) || length < 1 || length > 99) return;
+
+    const newPassword = generatePassword(length);
+    generatedPassword.textContent = newPassword;
+    outputSection.classList.remove('d-none');
+    copyBtn.disabled = false;
+  });
+  
+   const passCopyModal = document.getElementById('passCopyModal');
+    const passCopyModalMessage = document.getElementById('passCopyModalMessage');
+    const passCloseCopyModalBtn = document.getElementById('passCloseCopyModalBtn');
+    
+    copyBtn.addEventListener('click', () => {
+        const password = generatedPassword.textContent;
+
+        if (!password || password.includes('•')) return;
+
+        navigator.clipboard.writeText(password).then(() => {
+          
+            passCopyModalMessage.textContent = "Password copied to clipboard!";
+            passCopyModal.style.display = 'flex';
+            copyBtn.disabled = true;
+        }).catch(err => {
+            passCopyModalMessage.textContent = "Failed to copy. Try again.";
+            passCopyModal.style.display = 'flex';
+        });
+    });
+    
+    passCloseCopyModalBtn.addEventListener('click', () => {
+        passCopyModal.style.display = 'none';
+    });
+
+
   if (encryptButton) {
     encryptButton.addEventListener("click", () => {
       const itemLink = document.getElementById("item_link").value;
@@ -605,6 +687,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
+
   //footer
   document.querySelectorAll(".home-link").forEach((homeButton) => {
     homeButton.addEventListener("click", (e) => {
@@ -615,6 +698,20 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         showPage(loginPage);
       }
+    });
+  });
+
+  document.querySelectorAll(".about-link").forEach((aboutButton) => {
+    aboutButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      showPage(aboutPage);
+    });
+  });
+
+  document.querySelectorAll(".privacy-link").forEach((aboutButton) => {
+    aboutButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      showPage(privacyPage);
     });
   });
 });

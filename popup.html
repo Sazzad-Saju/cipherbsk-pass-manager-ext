@@ -60,8 +60,8 @@
                 <div class="row mt_25">
                     <div class="col text-center">
                         <a href="#" class="footer-link mx-2 home-link">Home</a> |
-                        <a href="#" class="footer-link mx-2">About</a> |
-                        <a href="#" class="footer-link mx-2">Terms & Conditions</a>
+                        <a href="#" class="footer-link mx-2 about-link">About</a> |
+                        <a href="#" class="footer-link mx-2 privacy-link">Privacy Policy</a>
                     </div>
                 </div>
             </div>
@@ -118,8 +118,8 @@
                 <div class="row mt_25">
                     <div class="col text-center">
                         <a href="#" class="footer-link mx-2 home-link">Home</a> |
-                        <a href="#" class="footer-link mx-2">About</a> |
-                        <a href="#" class="footer-link mx-2">Terms & Conditions</a>
+                        <a href="#" class="footer-link mx-2 about-link">About</a> |
+                        <a href="#" class="footer-link mx-2 privacy-link">Privacy Policy</a>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
 
                         <div class="dashboard-buttons">
                             <button class="button btn-primary" id="goToAddEdit">Add New</button>
-                            <button class="button btn-success">Generate</button>
+                            <button class="button btn-success" id="goToGenerate">Generate</button>
                             <button class="button btn-danger" id="logoutBtn">Logout</button>
                         </div>
 
@@ -165,8 +165,8 @@
                 <div class="row mt_25">
                     <div class="col text-center">
                         <a href="#" class="footer-link mx-2 home-link">Home</a> |
-                        <a href="#" class="footer-link mx-2">About</a> |
-                        <a href="#" class="footer-link mx-2">Terms & Conditions</a>
+                        <a href="#" class="footer-link mx-2 about-link">About</a> |
+                        <a href="#" class="footer-link mx-2 privacy-link">Privacy Policy</a>
                     </div>
                 </div>
             </div>
@@ -268,8 +268,193 @@
                 <div class="row mt_25">
                     <div class="col text-center">
                         <a href="#" class="footer-link mx-2 home-link">Home</a> |
-                        <a href="#" class="footer-link mx-2">About</a> |
-                        <a href="#" class="footer-link mx-2">Terms & Conditions</a>
+                        <a href="#" class="footer-link mx-2 about-link">About</a> |
+                        <a href="#" class="footer-link mx-2 privacy-link">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div class="generatePage">
+        <div class="container-fluid bigBar py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <img src="img/bsk_logo.png" alt="Logo" class="img-logo">
+                    </div>
+                    <div>
+                        <h1>Cipher BSK</h1>
+                        <h5 class="blue">Password Generator</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid proj-body generate">
+            <div class="container pad">
+                <div class="row pt-4 pad">
+                    <div class="col text-center">
+                        <h3 class="diffHeader">Generate a Secure Password</h3>
+                        <p class="text-muted">Set your desired length (max 99) and click generate.</p>
+
+                        <div class="generator-controls my-4">
+                            <label for="lengthInput"><strong>Password Length:</strong></label>
+                            <div class="d-flex justify-content-center align-items-center gap-3 mt-2">
+                                <input type="number" id="lengthInput" min="1" max="99" value="12"
+                                    class="form-control w-auto text-center" style="width: 70px;">
+                                <input type="range" id="lengthSlider" min="1" max="99" value="12" class="form-range mt-15"
+                                    style="width: 200px;">
+                            </div>
+                        </div>
+
+                        <div class="generator-buttons mt-15">
+                            <button id="generateBtn" class="btn btn-primary mx-2">Generate</button>
+                            <button id="copyBtn" class="btn btn-outline-secondary mx-2" disabled>Copy</button>
+                        </div>
+
+                        <div class="generated-output mt_25 d-none" id="outputSection">
+                            <label><strong>Your Generated Password:</strong></label>
+                            <div class="output-box mt-2 px-3 py-2 border rounded bg-light" id="generatedPassword"
+                                style="font-family: monospace;">••••••••••••</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt_25">
+                    <div class="col text-center">
+                        <a href="#" class="footer-link mx-2 home-link">Home</a> |
+                        <a href="#" class="footer-link mx-2 about-link">About</a> |
+                        <a href="#" class="footer-link mx-2 privacy-link">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+            <div id="passCopyModal" class="custom-modal-overlay" style="display: none;">
+                <div class="custom-modal">
+                    <p id="passCopyModalMessage" class="modal-message"></p>
+                    <div class="modal-actions">
+                    <button id="passCloseCopyModalBtn" class="button btn-success">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <div class="aboutPage">
+        <div class="container-fluid bigBar py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <img src="img/bsk_logo.png" alt="Logo" class="img-logo">
+                    </div>
+                    <div>
+                        <h1>Cipher BSK</h1>
+                        <h5 class="blue">Password Manager</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid proj-body about">
+            <div class="container pad">
+                <div class="row pt-4 pad">
+                    <div class="col">
+                        <div class="text-center mb-4">
+                            <h3 class="diffHeader">About Cipher BSK Password Manager</h3>
+                            <p class="lead text-muted">Secure, open, and user-controlled password encryption.</p>
+                        </div>
+                        <hr>
+                        <div class="about-section">
+                            <p><strong>Developed by:</strong> Sazzad Saju, Software Developer</p>
+                            <p><strong>Encryption Model:</strong> Based on <em>Cipher-BSK</em>, a published symmetric
+                                encryption model. Users can choose encryption strength by selecting the number of rounds
+                                — typically, one round is sufficient.</p>
+                                
+                            <strong><i class="fas fa-lock me-2"></i> End-to-End Encryption</strong>
+                            <p>Your data is encrypted locally using your master password. No one else, not even we, can decrypt it.</p>
+
+                            <strong><i class="fas fa-user-secret me-2"></i> Privacy First</strong>
+                            <p>We never track or store your master password or vault contents. You're in full control.</p>
+                            
+                            <strong><i class="fas fa-sync-alt me-2"></i>Cross-Device Sync</strong>
+                            <p>Securely access your encrypted data from any device with Chrome Extension login.</p>
+
+                            <div class="text-center mt_25">
+                                <a href="https://www.ijcaonline.org/archives/volume183/number2/saju-2021-ijca-921290.pdf"
+                                    target="_blank" class="btn btn-outline-primary btn-sm mx-2">Read Published Paper</a>
+                                <a href="https://packagist.org/packages/sham3r/cipher-bsk" target="_blank"
+                                    class="btn btn-outline-dark btn-sm mx-2">Composer Package</a>
+                                <a href="https://socket.dev/npm/package/cipher-bsk" target="_blank"
+                                    class="btn btn-outline-success btn-sm mx-2">NPM Package</a>
+                            </div>
+                        </div>
+                        <div class="text-center social-links">
+                            <a href="https://github.com/sazzad-saju" target="_blank" class="btn btn-outline-dark btn-sm mx-2">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="https://www.linkedin.com/in/sazzad-saju/" target="_blank" class="btn btn-outline-primary btn-sm mx-2">
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row mt_25">
+                    <div class="col text-center">
+                        <a href="#" class="footer-link mx-2 home-link">Home</a> |
+                        <a href="#" class="footer-link mx-2 about-link">About</a> |
+                        <a href="#" class="footer-link mx-2 privacy-link">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="privacyPolicyPage">
+        <div class="container-fluid bigBar py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <img src="img/bsk_logo.png" alt="Logo" class="img-logo">
+                    </div>
+                    <div>
+                        <h1>Cipher BSK</h1>
+                        <h5 class="blue">Privacy Policy</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid proj-body privacy">
+            <div class="container pad">
+                <div class="row pt-4 pad">
+                    <div class="col">
+                        <div class="text-center mb-4">
+                            <h3 class="diffHeader">Privacy Policy</h3>
+                            <p class="lead text-muted">Your privacy is our priority. Here's how we protect it.</p>
+                        </div>
+                        <hr>
+                        <div class="privacy-section">
+                            <p><strong>No Tracking:</strong> We don’t collect personal data or use analytics.</p>
+                        <p><strong>Local Encryption:</strong> All data is encrypted on your device using your master password. We never see or store it.</p>
+                        <p><strong>Encrypted Data Only:</strong> When you save, we receive only encrypted content — never plaintext.</p>
+                        <p><strong>Encryption Control:</strong> You choose the number of encryption rounds. One round is usually enough, but more can add extra protection.</p>
+                        <p><strong>Security Enforcement:</strong> Saving is blocked if encryption rounds are set to zero (plaintext). We enforce encryption to protect your data.</p>
+                        <p><strong>User-Controlled Output:</strong> You control how your data is encrypted and how it looks after encryption.</p>
+                        <p><strong>Open Source:</strong> Our code is public and auditable for transparency.</p>
+                        <p class="mt-3"><strong>Questions?</strong> Contact: <a href="mailto:saju.cse.hstu@gmail.com">saju.cse.hstu@gmail.com</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt_25">
+                    <div class="col text-center">
+                        <a href="#" class="footer-link mx-2 home-link">Home</a> |
+                        <a href="#" class="footer-link mx-2 about-link">About</a> |
+                        <a href="#" class="footer-link mx-2 privacy-link">Privacy Policy</a>
                     </div>
                 </div>
             </div>

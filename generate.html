@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIPHER BSK - Login</title>
+    <link rel="stylesheet" href="css/bootstrap-custom.css">
+    <link rel="stylesheet" href="css/bsk.css">
+    <link rel="shortcut icon" type="image/png" href="img/bsk_icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="generatePage">
+        <div class="container-fluid bigBar py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <img src="img/bsk_logo.png" alt="Logo" class="img-logo">
+                    </div>
+                    <div>
+                        <h1>Cipher BSK</h1>
+                        <h5 class="blue">Password Generator</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid proj-body generate">
+            <div class="container pad">
+                <div class="row pt-4 pad">
+                    <div class="col text-center">
+                        <h3 class="diffHeader">Generate a Secure Password</h3>
+                        <p class="text-muted">Set your desired length (max 99) and click generate.</p>
+
+                        <div class="generator-controls my-4">
+                            <label for="lengthInput"><strong>Password Length:</strong></label>
+                            <div class="d-flex justify-content-center align-items-center gap-3 mt-2">
+                                <input type="number" id="lengthInput" min="1" max="99" value="12"
+                                    class="form-control w-auto text-center" style="width: 70px;">
+                                <input type="range" id="lengthSlider" min="1" max="99" value="12" class="form-range mt-15"
+                                    style="width: 200px;">
+                            </div>
+                        </div>
+
+                        <div class="generator-buttons mt-15">
+                            <button id="generateBtn" class="btn btn-primary mx-2">Generate</button>
+                            <button id="copyBtn" class="btn btn-outline-secondary mx-2" disabled>Copy</button>
+                        </div>
+
+                        <div class="generated-output mt_25 d-none" id="outputSection">
+                            <label><strong>Your Generated Password:</strong></label>
+                            <div class="output-box mt-2 px-3 py-2 border rounded bg-light" id="generatedPassword"
+                                style="font-family: monospace;">••••••••••••</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt_25">
+                    <div class="col text-center">
+                        <a href="#" class="footer-link mx-2 home-link">Home</a> |
+                        <a href="#" class="footer-link mx-2 about-link">About</a> |
+                        <a href="#" class="footer-link mx-2 privacy-link">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Placeholder for future logic -->
+    <script src="js/login.js"></script>
+    <script src="js/bsk.js"></script>
+</body>
+
+</html>

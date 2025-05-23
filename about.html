@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIPHER BSK - Login</title>
+    <link rel="stylesheet" href="css/bootstrap-custom.css">
+    <link rel="stylesheet" href="css/bsk.css">
+    <link rel="shortcut icon" type="image/png" href="img/bsk_icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        
+    </style>
+</head>
+
+<body>
+     <div class="aboutPage">
+        <div class="container-fluid bigBar py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <img src="img/bsk_logo.png" alt="Logo" class="img-logo">
+                    </div>
+                    <div>
+                        <h1>Cipher BSK</h1>
+                        <h5 class="blue">Password Manager</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid proj-body login">
+            <div class="container pad">
+                <div class="row pt-4 pad">
+                    <div class="col">
+                        <div class="text-center mb-4">
+                            <h2 class="diffHeader">About Cipher BSK</h2>
+                            <p class="lead text-muted">Secure, open, and user-controlled password encryption.</p>
+                        </div>
+
+                        <div class="about-section">
+                            <p><strong>Developed by:</strong> Sazzad Saju, Software Developer</p>
+                            <p><strong>Encryption Model:</strong> Based on <em>Cipher-BSK</em>, a published symmetric
+                                encryption model. Users can choose encryption strength by selecting the number of rounds
+                                — typically, one round is sufficient.</p>
+                                
+                            <strong><i class="fas fa-lock me-2"></i> End-to-End Encryption</strong>
+                            <p>Your data is encrypted locally using your master password. No one else, not even we, can decrypt it.</p>
+
+                            <strong><i class="fas fa-user-secret me-2"></i> Privacy First</strong>
+                            <p>We never track or store your master password or vault contents. You're in full control.</p>
+                            
+                            <strong><i class="fas fa-sync-alt me-2"></i>Cross-Device Sync</strong>
+                            <p>Securely access your encrypted data from any device with Chrome Extension login.</p>
+
+                            <div class="text-center mt_25">
+                                <a href="https://www.ijcaonline.org/archives/volume183/number2/saju-2021-ijca-921290.pdf"
+                                    target="_blank" class="btn btn-outline-primary btn-sm mx-2">Read Published Paper</a>
+                                <a href="https://packagist.org/packages/sham3r/cipher-bsk" target="_blank"
+                                    class="btn btn-outline-dark btn-sm mx-2">Composer Package</a>
+                                <a href="https://socket.dev/npm/package/cipher-bsk" target="_blank"
+                                    class="btn btn-outline-success btn-sm mx-2">NPM Package</a>
+                            </div>
+                        </div>
+                        <div class="text-center social-links">
+                            <a href="https://github.com/sazzad-saju" target="_blank" class="btn btn-outline-dark btn-sm mx-2">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="https://www.linkedin.com/in/sazzad-saju/" target="_blank" class="btn btn-outline-primary btn-sm mx-2">
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row mt_25">
+                    <div class="col text-center">
+                        <a href="#" class="footer-link mx-2 home-link">Home</a> |
+                        <a href="#" class="footer-link mx-2">Login</a> |
+                        <a href="#" class="footer-link mx-2">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between Login/Register UI
+        document.addEventListener("DOMContentLoaded", function () {
+            const formTitle = document.getElementById("formTitle");
+            const loginBtn = document.getElementById("loginBtn");
+            const toggleRegister = document.getElementById("toggleRegister");
+
+            let isRegister = false;
+
+            toggleRegister.addEventListener("click", function (e) {
+                e.preventDefault();
+                isRegister = !isRegister;
+                formTitle.textContent = isRegister ? "Register" : "Login";
+                loginBtn.textContent = isRegister ? "Register" : "Login";
+                toggleRegister.textContent = isRegister
+                    ? "Already have an account? Login"
+                    : "Don't have an account? Register";
+            });
+
+            // Password visibility toggle
+            const passwordInput = document.getElementById("pass");
+            const togglePassword = document.getElementById("togglePassword");
+
+            togglePassword.addEventListener("click", function () {
+                const isPassword = passwordInput.type === "password";
+                passwordInput.type = isPassword ? "text" : "password";
+                togglePassword.classList.toggle("fa-eye");
+                togglePassword.classList.toggle("fa-eye-slash");
+            });
+        });
+    </script>
+
+    <!-- Placeholder for future logic -->
+    <script src="js/login.js"></script>
+    <script src="js/bsk.js"></script>
+</body>
+
+</html>

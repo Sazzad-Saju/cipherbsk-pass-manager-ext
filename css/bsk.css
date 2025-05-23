@@ -1,4 +1,8 @@
-body, input, button, textarea, select {
+body,
+input,
+button,
+textarea,
+select {
     font-family: 'Inter', sans-serif;
 }
 
@@ -129,46 +133,51 @@ a:hover {
     padding-bottom: 20px;
 }
 
-.mt-5{
+.mt-5 {
     margin-top: 5px;
 }
-.mb-5{
+
+.mb-5 {
     margin-bottom: 5px;
 }
 
-.mt-10{
+.mt-10 {
     margin-top: 10px;
 }
 
-.mt_25{
+.mt-15{
+    margin-top: 15px;
+}
+
+.mt_25 {
     margin-top: 25px;
 }
 
-.mb-20{
+.mb-20 {
     margin-bottom: 20px;
 }
 
-.w-20{
+.w-20 {
     width: 20px;
 }
 
-.w-250{
-    width: 250px!important;
+.w-250 {
+    width: 250px !important;
 }
 
-.pt_10{
+.pt_10 {
     padding-top: 10px;
 }
 
-.text-success{
+.text-success {
     color: #28A745
 }
 
-.text-danger{
+.text-danger {
     color: #DC3545
 }
 
-.footer-link{
+.footer-link {
     color: #000;
 }
 
@@ -178,7 +187,7 @@ a:hover {
 
 /* login */
 
-.login .toggle-password{
+.login .toggle-password {
     position: absolute;
     right: 20px;
     bottom: 11px;
@@ -187,7 +196,7 @@ a:hover {
 
 
 /* register */
-.register .toggle-password{
+.register .toggle-password {
     position: absolute;
     right: 20px;
     bottom: 114px;
@@ -195,7 +204,7 @@ a:hover {
 }
 
 /* dashboard */
-.dashboard .item_list{
+.dashboard .item_list {
     gap: 5px;
     justify-content: center;
 }
@@ -227,87 +236,142 @@ a:hover {
 } */
 
 .dashboard .scroll-wrapper {
-  max-height: 460px;
-  overflow-y: auto;
-  overflow-x: hidden;
+    max-height: 460px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .dashboard-buttons {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 10px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .button {
-  border: none;
-  border-radius: 50px;
-  padding: 7px;
-  margin: 0 10px;
-  font-size: 12px;
-  color: white;
-  cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.3s ease;
+    border: none;
+    border-radius: 50px;
+    padding: 7px;
+    margin: 0 10px;
+    font-size: 12px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .btn-primary {
-  background-color: #3777A3;
+    background-color: #3777A3;
 }
 
 .btn-success {
-  background-color: #37a37f;
+    background-color: #37a37f;
 }
 
 .btn-danger {
-  background-color: #a35937;
+    background-color: #a35937;
 }
 
 .dashboard-buttons button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
+    transform: scale(1.05);
+    opacity: 0.9;
 }
 
 /* Optional: smoother scrolling */
 .dashboard .scroll-wrapper::-webkit-scrollbar {
-  width: 6px;
+    width: 6px;
 }
+
 .dashboard .scroll-wrapper::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
 }
 
 /* add/edit */
-.add-edit p{
+.add-edit p {
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
 /* modal */
 .custom-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .custom-modal {
-  background: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .modal-message {
-  font-size: 12px;
-  margin-bottom: 15px;
+    font-size: 12px;
+    margin-bottom: 15px;
 }
 
 .modal-actions button {
-  margin: 0 10px;
+    margin: 0 10px;
+}
+
+/* about */
+.about h3{
+    font-size: 18px;
+}
+.about .lead{
+    font-size: 14px;
+} 
+
+.about-section p {
+    font-size: 12px;
+    color: #444;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.about-section .btn {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.social-links .btn {
+    padding: 0px 4px;
+}
+
+.privacy h3{
+    font-size: 18px;
+}
+
+.privacy .lead{
+    font-size: 14px;
+}
+
+.privacy-section{
+    font-size: 12px;
+}
+
+/* generate */
+.generate .generator-controls input[type="range"] {
+    accent-color: #007bff;
+    height: 6px;
+    cursor: pointer;
+}
+
+.generate .output-box {
+    word-break: break-all;
+    font-size: 1.2rem;
+    user-select: all;
+}
+
+.generate #copyBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
