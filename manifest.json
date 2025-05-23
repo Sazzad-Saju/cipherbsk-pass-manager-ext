@@ -3,7 +3,8 @@
     "name": "Cipher BSK Pass Manager",
     "author": "Sazzad Saju",
     "version": "1.0",
-    "description": "A lightweight password manager extension implementing a developed cipher model from the research paper 'A Hybrid Cryptographic Scheme of Modified Vigenère Cipher using a Randomized Approach for Enhancing Data Security' by Sazzad Saju. Designed for robust everyday data protection, this extension enables securely store sensitive data on server and retrieve back efficiently. Learn more at: https://bit.ly/cipher-bsk.",
+    "description": "A lightweight password manager extension powered by Cipher-BSK — a custom, open-source encryption model developed by Sazzad Saju. It supports multilayer encryption with full user control over how data is secured. Encryption occurs locally; no plaintext or zero-encryption data is ever stored. Built on a published cryptographic scheme and openly challengeable, Cipher-BSK is designed for serious, everyday password protection. Learn more: https://bit.ly/cipher-bsk",
+
     "icons": {
       "48": "img/bsk_icon.png",
       "128": "img/bsk_icon.png"

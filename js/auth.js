@@ -426,14 +426,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
 
         if (response.ok) {
-          showPage(loginPage);
           registerButton.disabled = false;
           registerButton.innerText = "Register";
-          alert("Registration successful! Please Login!.");
           registerEmailError.innerText = "";
           registerPassError.innerText = "";
           registerPassConfirmError.innerText = "";
-
+          
+          const registerModal = document.getElementById('registerModal');
+          const registerModalMessage = document.getElementById('registerModalMessage');
+          const registerCloseModalBtn = document.getElementById('registerCloseModalBtn');
+          
+          registerModalMessage.textContent = "Registration successful! Please login.";
+          registerModal.style.display = 'flex';
+          
+          registerCloseModalBtn.addEventListener('click', () => {
+              registerModal.style.display = 'none';
+              showPage(loginPage);
+          });
         } else {
           if (data.errors) {
             if (data.errors.email) {
