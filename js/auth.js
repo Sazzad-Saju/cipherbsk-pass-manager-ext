@@ -100,8 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="p-3 border rounded shadow-sm h-100">
         <small class="text-muted d-block">Name: ${item.name}</small>
         <div class="d-grid gap-2 mt-5 mb-5">
-          <button class="btn btn-sm user-btn" data-email="${item.email}" type="button"><i class="fa-solid fa-user"></i></button>
-          <button class="btn btn-sm pass-btn" data-pass="${item.password}" type="button"><i class="fa-solid fa-key"></i></button>
+          <button class="btn btn-sm user-btn" data-id="${item.id}" type="button"><i class="fa-solid fa-user"></i></button>
+          <button class="btn btn-sm pass-btn" data-id="${item.id}" type="button"><i class="fa-solid fa-key"></i></button>
         </div>
         <div class="d-grid gap-2 mt-5 mb-5">
           <button class="btn btn-sm edit-btn" type="button" data-id="${item.id}"><i class="fas fa-edit"></i></button>
@@ -191,7 +191,14 @@ document.addEventListener("DOMContentLoaded", () => {
     //copy email: 
     document.querySelectorAll(".user-btn").forEach(btn => {
       btn.addEventListener("click", () => {
-        const encryptedEmail = btn.getAttribute("data-email");
+        const itemId = btn.getAttribute("data-id");
+        const items = JSON.parse(localStorage.getItem("customer_items") || "[]");
+        const item = items.find(i => i.id == itemId);
+        
+        if (!item || !item.email) {
+          showCopyModal("No email found for this item.");
+          return;
+        }
 
         chrome.runtime.sendMessage({ type: "GET_MASTER_PASSWORD" }, (response) => {
           const masterPassword = response.password;
@@ -203,8 +210,14 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           try {
-            const decryptedEmail = bskDecrypt(encryptedEmail, masterPassword);
-            navigator.clipboard.writeText(decryptedEmail)
+            const rounds = parseInt(item.en_round) || 1;
+            let decrypted = item.email;
+            
+            for (let i = 0; i < rounds; i++) {
+              decrypted = bskDecrypt(decrypted, masterPassword);
+            }
+            
+            navigator.clipboard.writeText(decrypted)
               .then(() => {
                 showCopyModal("Username copied to clipboard!");
               })
@@ -222,7 +235,14 @@ document.addEventListener("DOMContentLoaded", () => {
     //copy pass:
     document.querySelectorAll(".pass-btn").forEach(btn => {
       btn.addEventListener("click", () => {
-        const encryptedPassword = btn.getAttribute("data-pass");
+        const itemId = btn.getAttribute("data-id");
+        const items = JSON.parse(localStorage.getItem("customer_items") || "[]");
+        const item = items.find(i => i.id == itemId);
+        
+        if (!item || !item.email) {
+          showCopyModal("No email found for this item.");
+          return;
+        }
 
         chrome.runtime.sendMessage({ type: "GET_MASTER_PASSWORD" }, (response) => {
           const masterPassword = response.password;
@@ -234,8 +254,12 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           try {
-            const decryptedPassword = bskDecrypt(encryptedPassword, masterPassword);
-            navigator.clipboard.writeText(decryptedPassword)
+             const rounds = parseInt(item.en_round) || 1;
+            let decrypted = item.password;
+            for (let i = 0; i < rounds; i++) {
+              decrypted = bskDecrypt(decrypted, masterPassword);
+            }
+            navigator.clipboard.writeText(decrypted)
               .then(() => {
                 showCopyModal("Password copied to clipboard!");
               })
