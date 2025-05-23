@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CIPHER BSK - Password Manager</title>
-     <link rel="stylesheet" href="css/bootstrap-custom.css">
+    <link rel="stylesheet" href="css/bootstrap-custom.css">
     <link rel="stylesheet" href="css/bsk.css">
     <link rel="shortcut icon" type="image/png" href="img//bsk_icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -14,7 +14,61 @@
 </head>
 
 <body>
-    <div>
+    <div class="loginPage">
+        <div class="container-fluid bigBar py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <img src="img/bsk_logo.png" alt="Logo" class="img-logo">
+                    </div>
+                    <div>
+                        <h1>Cipher BSK</h1>
+                        <h5 class="blue">Password Manager</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid proj-body login">
+            <div class="container pad">
+                <div class="row pt-4 pad">
+                    <div class="col">
+                        <div class="text-center">
+                            <h5 class="diffHeader textAreaTitle">Login</h5>
+                        </div>
+
+                        <h5>Email: </h5>
+                        <input type="text" class="form-control" style="width: 100%;" id="loginEmail">
+
+                        <h5>Password: </h5>
+                        <input type="password" class="form-control" style="width: 100%;" id="loginPass">
+                        <i class="fas fa-eye-slash toggle-password" data-targets="loginPass"></i>
+                        <small class="text-danger" id="loginError"></small>
+
+                    </div>
+                </div>
+                <div class="row pt-4 text-center">
+                    <div class="d-grid gap-2 col-12 mx-auto">
+                        <button class="btn btn-lg w-250" type="button" id="loginBtn">Login</button>
+                    </div>
+                </div>
+                <p class="text-center">
+                    <a href="#" id="toggleRegister" class="links">Don't have an account? Register Now</a><br>
+                    <a href="#" id="forgotPass" class="links">Forgot Password?</a>
+                </p>
+
+                <div class="row mt_25">
+                    <div class="col text-center">
+                        <a href="#" class="footer-link mx-2 home-link">Home</a> |
+                        <a href="#" class="footer-link mx-2">About</a> |
+                        <a href="#" class="footer-link mx-2">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="registerPage">
         <div class="container-fluid bigBar py-4">
             <div class="container">
                 <div class="d-flex">
@@ -36,48 +90,196 @@
                         <div class="text-center">
                             <h5 class="diffHeader textAreaTitle">Register</h5>
                         </div>
-                    
+
                         <h5>Email: </h5>
-                        <input type="text" class="form-control" style="width: 100%;" id="email">
-                        <small class="text-danger" id="passErr">Invalid Credential</small>
-                        
+                        <input type="text" class="form-control" style="width: 100%;" id="registerEmail">
+                        <small class="text-danger" id="registerEmailErr"></small>
+
                         <h5>Master Password: </h5>
-                        <input type="password" class="form-control" style="width: 100%;" id="pass">
-                        <i class="fas fa-eye-slash" id="togglePassword"></i>
-                        <small class="text-danger" id="passErr">Minimum 8 character including an alphabet, a digit and or a special character</small>
-                        
+                        <input type="password" class="form-control" style="width: 100%;" id="registerPass">
+                        <i class="fas fa-eye-slash toggle-password" data-targets="registerPass,passConfirm"></i>
+                        <small class="text-danger" id="registerPassErr"></small>
+
                         <h5>Confirm Master Password: </h5>
-                        <input type="password" class="form-control" style="width: 100%;" id="pass_confirm">
-                        <small class="text-danger" id="passErr">Minimum 8 character including an alphabet, a digit and or a special character</small>
-                        
+                        <input type="password" class="form-control" style="width: 100%;" id="registerPassConfirm">
+                        <small class="text-danger" id="registerPassConfirmErr"></small>
+
                     </div>
                 </div>
                 <div class="row pt-4 text-center">
                     <div class="d-grid gap-2 col-12 mx-auto">
-                        <button class="btn btn-lg w-250" type="button" id="login">Register</button>
+                        <button class="btn btn-lg w-250" type="button" id="registerBtn">Register</button>
                     </div>
                 </div>
                 <p class="text-center">
-                    <a href="#" id="toggleRegister" class="links">Already have an account? Login Now</a><br>
+                    <a href="#" id="backToLoginBtn" class="links">Already have an account? Login Now</a><br>
                 </p>
-                
+
                 <div class="row mt_25">
                     <div class="col text-center">
-                        <a href="#" class="footer-link mx-2">Home</a> |
+                        <a href="#" class="footer-link mx-2 home-link">Home</a> |
                         <a href="#" class="footer-link mx-2">About</a> |
                         <a href="#" class="footer-link mx-2">Terms & Conditions</a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboardPage">
+        <div class="container-fluid bigBar py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <img src="img/bsk_logo.png" alt="Logo" class="img-logo">
+                    </div>
+                    <div>
+                        <h1>Cipher BSK</h1>
+                        <h5 class="blue">Password Manager</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid proj-body dashboard">
+            <div class="container pad">
+                <div class="row pt-4 pad">
+                    <div class="col">
+                        <div class="text-center">
+                            <h5 class="diffHeader textAreaTitle ">Dashboard</h5>
+                        </div>
+
+                        <div class="dashboard-buttons">
+                            <button class="btn-add" id="goToAddEdit">Add New</button>
+                            <button class="btn-generate">Generate</button>
+                            <button class="btn-logout" id="logoutBtn">Logout</button>
+                        </div>
+
+                        <div class="scroll-wrapper">
+                            <div class="row g-3 item_list mt_25">
+                                <!-- Item 1 -->
+                                <!-- <div class="col-md-6 item">
+                                    <div class="p-3 border rounded shadow-sm h-100">
+                                        <small class="text-muted d-block">Name: Google Account</small>
+                                        <div class="d-grid gap-2 mt-5 mb-5">
+                                            <button class="btn btn-sm" type="button"><i
+                                                    class="fa-solid fa-user"></i></button>
+                                            <button class="btn btn-sm" type="button"><i
+                                                    class="fa-solid fa-key"></i></button>
+                                        </div>
+                                        <div class="d-grid gap-2 mt-5 mb-5">
+                                            <button class="btn btn-sm" type="button"><i
+                                                    class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm" type="button"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt_25">
+                    <div class="col text-center">
+                        <a href="#" class="footer-link mx-2 home-link">Home</a> |
+                        <a href="#" class="footer-link mx-2">About</a> |
+                        <a href="#" class="footer-link mx-2">Terms & Conditions</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
+    <div class="addEditPage">
+        <div class="container-fluid bigBar py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <img src="img/bsk_logo.png" alt="Logo" class="img-logo">
+                    </div>
+                    <div>
+                        <h1>Cipher BSK</h1>
+                        <h5 class="blue">Password Manager</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid proj-body add-edit">
+            <div class="container pad">
+                <div class="row pt-4 pad">
+                    <div class="col">
+                        <div class="text-center">
+                            <h5 class="diffHeader textAreaTitle ">Add/Edit Items</h5>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <p>Name: </p>
+                                <input type="text" class="form-control" style="width: 100%;" id="item_name">
+
+                                <p>Link: </p>
+                                <input type="text" class="form-control" style="width: 100%;" id="item_link">
+
+                                <p>Username: </p>
+                                <input type="text" class="form-control" style="width: 100%;" id="item_email">
+
+                                <p>Password: </p>
+                                <input type="text" class="form-control" style="width: 100%;" id="item_pass">
+
+                                <p>Note: </p>
+                                <textarea id="item_note" name="txt" rows="3" style="width: 100%" class="form-control"></textarea>
+                                
+                                <small>Encryption Round: <b><span id="en_round"></span></b></small>
+
+                                <div class="row pt-4">
+                                    <div class="col-6">
+                                        <div class="d-grid gap-2 col-12 mx-auto">
+                                            <button class="btn btn-lg" type="button" id="encryptBtn">Encrypt</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-grid gap-2 col-12 mx-auto">
+                                            <button class="btn btn-lg" type="button" id="decryptBtn">Decrypt</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row py-2 pt_10">
+                                    <div class="col text-center">
+                                        <span id="success_msg" class="text-success"></span>
+                                        <span id="failed_msg" class="text-danger"></span>
+                                    </div>               
+                                </div>
+                                <div class="row mt-10 text-center">
+                                    <div class="col">
+                                        <div class="d-grid gap-2 col-12 mx-auto">
+                                            <button class="btn btn-lg" type="button" id="saveBtn">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt_25">
+                    <div class="col text-center">
+                        <a href="#" class="footer-link mx-2 home-link">Home</a> |
+                        <a href="#" class="footer-link mx-2">About</a> |
+                        <a href="#" class="footer-link mx-2">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/keyGen.js"></script>
     <script src="js/encrypt.js"></script>
     <script src="js/decrypt.js"></script>
     <script src="js/bsk.js"></script>
-    
+
     <script src="js/auth.js"></script>
 
 </body>

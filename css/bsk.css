@@ -156,7 +156,17 @@ a:hover {
     width: 250px!important;
 }
 
+.pt_10{
+    padding-top: 10px;
+}
 
+.text-success{
+    color: #28A745
+}
+
+.text-danger{
+    color: #DC3545
+}
 
 .footer-link{
     color: #000;
@@ -168,7 +178,7 @@ a:hover {
 
 /* login */
 
-.login #togglePassword{
+.login .toggle-password{
     position: absolute;
     right: 20px;
     bottom: 11px;
@@ -177,7 +187,7 @@ a:hover {
 
 
 /* register */
-.register #togglePassword{
+.register .toggle-password{
     position: absolute;
     right: 20px;
     bottom: 114px;
@@ -220,6 +230,40 @@ a:hover {
   max-height: 460px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.dashboard-buttons {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.dashboard-buttons button {
+  border: none;
+  border-radius: 50px;
+  padding: 7px;
+  margin: 0 10px;
+  font-size: 12px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.btn-add {
+  background-color: #3777A3;
+}
+
+.btn-generate {
+  background-color: #37a37f;
+}
+
+.btn-logout {
+  background-color: #a35937;
+}
+
+.dashboard-buttons button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
 }
 
 /* Optional: smoother scrolling */

@@ -1,14 +1,17 @@
 {
     "manifest_version": 3,
-    "name": "Cipher BSK",
+    "name": "Cipher BSK Pass Manager",
     "author": "Sazzad Saju",
     "version": "1.0",
-    "description": "A lightweight encryption extension implementing techniques from the research paper 'A Hybrid Cryptographic Scheme of Modified Vigenère Cipher using a Randomized Approach for Enhancing Data Security' by Sazzad Saju. Designed for robust everyday data protection, this extension enables secure text encryption with ease. Learn more at: https://bit.ly/cipher-bsk.",
+    "description": "A lightweight password manager extension implementing a developed cipher model from the research paper 'A Hybrid Cryptographic Scheme of Modified Vigenère Cipher using a Randomized Approach for Enhancing Data Security' by Sazzad Saju. Designed for robust everyday data protection, this extension enables securely store sensitive data on server and retrieve back efficiently. Learn more at: https://bit.ly/cipher-bsk.",
     "icons": {
       "48": "img/bsk_icon.png",
       "128": "img/bsk_icon.png"
     },
-    "permissions": [],
+    "background": {
+      "service_worker": "js/background.js"
+    },
+    "permissions": ["storage", "clipboardWrite", "scripting"],
     "action": {
       "default_popup": "popup.html",
       "default_icon": "img/bsk_icon.png"
