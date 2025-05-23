@@ -65,6 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
         showPage(loginPage);
       });
   }
+  
+  document.getElementById("closeCopyModalBtn").addEventListener("click", () => {
+    document.getElementById("copyModal").style.display = "none";
+  });
 
   function clearAddEditFields() {
     document.getElementById("item_link").value = "";
@@ -75,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("en_round").innerText = "";
     document.getElementById("success_msg").innerText = "";
     document.getElementById("failed_msg").innerText = "";
-     document.getElementById("saveBtn").removeAttribute("data-edit-id");
+    document.getElementById("saveBtn").removeAttribute("data-edit-id");
   }
 
   function renderCustomerItemsFromLocalStorage() {
@@ -96,21 +100,22 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="p-3 border rounded shadow-sm h-100">
         <small class="text-muted d-block">Name: ${item.name}</small>
         <div class="d-grid gap-2 mt-5 mb-5">
-          <button class="btn btn-sm" type="button"><i class="fa-solid fa-user"></i></button>
-          <button class="btn btn-sm" type="button"><i class="fa-solid fa-key"></i></button>
+          <button class="btn btn-sm user-btn" data-email="${item.email}" type="button"><i class="fa-solid fa-user"></i></button>
+          <button class="btn btn-sm pass-btn" data-pass="${item.password}" type="button"><i class="fa-solid fa-key"></i></button>
         </div>
         <div class="d-grid gap-2 mt-5 mb-5">
           <button class="btn btn-sm edit-btn" type="button" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-          <button class="btn btn-sm" type="button"><i class="fas fa-trash"></i></button>
+          <button class="btn btn-sm delete-btn" type="button" data-id="${item.id}"><i class="fas fa-trash"></i></button>
         </div>
       </div>
     `;
       itemList.appendChild(itemElement);
     });
-    
+
     //edit
     document.querySelectorAll(".edit-btn").forEach(btn => {
       btn.addEventListener("click", () => {
+        clearAddEditFields()
         const itemId = btn.getAttribute("data-id");
 
         const items = JSON.parse(localStorage.getItem("customer_items") || "[]");
@@ -131,9 +136,126 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    //delete
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const itemId = btn.getAttribute("data-id");
+
+        const modal = document.getElementById("confirmModal");
+        modal.style.display = "flex";
+
+        const confirmBtn = document.getElementById("confirmDeleteBtn");
+        const cancelBtn = document.getElementById("cancelDeleteBtn");
+
+        const token = localStorage.getItem("bsk_token");
+
+        confirmBtn.replaceWith(confirmBtn.cloneNode(true));
+        cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+
+        document.getElementById("confirmDeleteBtn").addEventListener("click", () => {
+          fetch(`http://api.eduvlan.ly/api/customer-item-delete/${itemId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
+          })
+            .then(async response => {
+              const data = await response.json();
+
+              if (response.ok) {
+                const items = JSON.parse(localStorage.getItem("customer_items") || "[]");
+                const updatedItems = items.filter(i => i.id != itemId);
+                localStorage.setItem("customer_items", JSON.stringify(updatedItems));
+                renderCustomerItemsFromLocalStorage();
+              } else {
+                alert(data.message || "Failed to delete item.");
+              }
+
+              modal.style.display = "none";
+            })
+            .catch(error => {
+              console.error("Delete error:", error);
+              alert("An error occurred. Please try again.");
+              modal.style.display = "none";
+            });
+        });
+
+        document.getElementById("cancelDeleteBtn").addEventListener("click", () => {
+          modal.style.display = "none";
+        });
+      });
+    });
     
+    //copy email: 
+    document.querySelectorAll(".user-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const encryptedEmail = btn.getAttribute("data-email");
+
+        chrome.runtime.sendMessage({ type: "GET_MASTER_PASSWORD" }, (response) => {
+          const masterPassword = response.password;
+
+          if (!masterPassword) {
+            alert("Session expired. Please log in again.");
+            logout();
+            return;
+          }
+
+          try {
+            const decryptedEmail = bskDecrypt(encryptedEmail, masterPassword);
+            navigator.clipboard.writeText(decryptedEmail)
+              .then(() => {
+                showCopyModal("Username copied to clipboard!");
+              })
+              .catch(() => {
+                showCopyModal("Failed to copy. Try again.");
+              });
+          } catch (e) {
+            console.error("Decryption failed:", e);
+            showCopyModal("Failed to decrypt username.");
+          }
+        });
+      });
+    });
+
+    //copy pass:
+    document.querySelectorAll(".pass-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const encryptedPassword = btn.getAttribute("data-pass");
+
+        chrome.runtime.sendMessage({ type: "GET_MASTER_PASSWORD" }, (response) => {
+          const masterPassword = response.password;
+
+          if (!masterPassword) {
+            alert("Session expired. Please log in again.");
+            logout();
+            return;
+          }
+
+          try {
+            const decryptedPassword = bskDecrypt(encryptedPassword, masterPassword);
+            navigator.clipboard.writeText(decryptedPassword)
+              .then(() => {
+                showCopyModal("Password copied to clipboard!");
+              })
+              .catch(() => {
+                showCopyModal("Failed to copy. Try again.");
+              });
+          } catch (e) {
+            console.error("Decryption failed:", e);
+            showCopyModal("Failed to decrypt password.");
+          }
+        });
+      });
+    });
+
   }
 
+  function showCopyModal(message) {
+    document.getElementById("copyModalMessage").innerText = message;
+    document.getElementById("copyModal").style.display = "flex";
+  }
 
   async function getCustomerItems() {
     const token = localStorage.getItem("bsk_token");
@@ -323,6 +445,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (goToAddEdit) {
     goToAddEdit.addEventListener("click", () => {
+      clearAddEditFields();
       showPage(addEditPage);
     });
   }
@@ -425,11 +548,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const token = localStorage.getItem("bsk_token");
     const editId = saveButton.getAttribute("data-edit-id");
-    
+
     const url = editId
-    ? `http://api.eduvlan.ly/api/customer-item-update/${editId}`
-    : "http://api.eduvlan.ly/api/customer-item-save";
-    
+      ? `http://api.eduvlan.ly/api/customer-item-update/${editId}`
+      : "http://api.eduvlan.ly/api/customer-item-save";
+
     const method = editId ? "PUT" : "POST";
 
     fetch(url, {

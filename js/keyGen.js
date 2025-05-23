@@ -43,6 +43,11 @@ function xmur3(str) {
 
 //KeyGeneration
 function keyGeneration(Mlength, K) {
+    if (!K) {
+        alert("Master Key is missing! Please login again!");
+        return null;
+    }
+  
     let subkey1;
     let Klength = K.length;
 

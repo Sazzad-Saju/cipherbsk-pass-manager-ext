@@ -213,7 +213,7 @@ a:hover {
     color: white;
 }
 
-.dashboard button {
+.btn-sm {
     cursor: pointer;
     border: none;
     font-size: 12px;
@@ -222,9 +222,9 @@ a:hover {
     padding: 2px;
 }
 
-.dashboard button:hover {
+/* .dashboard button:hover {
     border: none;
-}
+} */
 
 .dashboard .scroll-wrapper {
   max-height: 460px;
@@ -238,7 +238,7 @@ a:hover {
   margin-bottom: 10px;
 }
 
-.dashboard-buttons button {
+.button {
   border: none;
   border-radius: 50px;
   padding: 7px;
@@ -249,15 +249,15 @@ a:hover {
   transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
-.btn-add {
+.btn-primary {
   background-color: #3777A3;
 }
 
-.btn-generate {
+.btn-success {
   background-color: #37a37f;
 }
 
-.btn-logout {
+.btn-danger {
   background-color: #a35937;
 }
 
@@ -279,4 +279,35 @@ a:hover {
 .add-edit p{
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+/* modal */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-modal {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+
+.modal-message {
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.modal-actions button {
+  margin: 0 10px;
 }
