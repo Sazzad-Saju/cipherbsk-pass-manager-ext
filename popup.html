@@ -11,6 +11,11 @@
     <link rel="shortcut icon" type="image/png" href="img//bsk_icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .loginPage, .registerPage, .dashboardPage, .addEditPage, .generatePage, .aboutPage, .privacyPolicyPage {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -446,14 +451,16 @@
                         </div>
                         <hr>
                         <div class="privacy-section">
-                            <p><strong>No Tracking:</strong> We don’t collect personal data or use analytics.</p>
-                        <p><strong>Local Encryption:</strong> All data is encrypted on your device using your master password. We never see or store it.</p>
-                        <p><strong>Encrypted Data Only:</strong> When you save, we receive only encrypted content — never plaintext.</p>
-                        <p><strong>Encryption Control:</strong> You choose the number of encryption rounds. One round is usually enough, but more can add extra protection.</p>
-                        <p><strong>Security Enforcement:</strong> Saving is blocked if encryption rounds are set to zero (plaintext). We enforce encryption to protect your data.</p>
-                        <p><strong>User-Controlled Output:</strong> You control how your data is encrypted and how it looks after encryption.</p>
-                        <p><strong>Open Source:</strong> Our code is public and auditable for transparency.</p>
-                        <p class="mt-3"><strong>Questions?</strong> Contact: <a href="mailto:saju.cse.hstu@gmail.com">saju.cse.hstu@gmail.com</a></p>
+                            <p><strong>No Tracking:</strong> We don't collect personal data or use analytics.</p>
+                            <p><strong>Local Encryption:</strong> All data is encrypted on your device using your master password. We never see or store it.</p>
+                            <p><strong>Encrypted Data Only:</strong> When you save, we receive only encrypted content — never plaintext.</p>
+                            <p><strong>Session Security:</strong> Your master password is securely managed with 12-hour expiration for protection.</p>
+                            <p><strong>Encryption Control:</strong> You choose the number of encryption rounds. One round is usually enough, but more can add extra protection.</p>
+                            <p><strong>Security Enforcement:</strong> Saving is blocked if encryption rounds are set to zero (plaintext). We enforce encryption to protect your data.</p>
+                            <p><strong>User-Controlled Output:</strong> You control how your data is encrypted and how it looks after encryption.</p>
+                            <p><strong>Firebase Security:</strong> We use Firebase for authentication and storage. Only encrypted data is stored.</p>
+                            <p><strong>Open Source:</strong> Our code is public and auditable for transparency.</p>
+                            <p class="mt-3"><strong>Questions?</strong> Contact: <a href="mailto:saju.cse.hstu@gmail.com">saju.cse.hstu@gmail.com</a></p>
                         </div>
                     </div>
                 </div>
@@ -469,11 +476,21 @@
         </div>
     </div>
 
+    </div>
+
+    <!-- Load Firebase SDKs first -->
+    <script src="js/firebase/firebase-app-compat.js"></script>
+    <script src="js/firebase/firebase-auth-compat.js"></script>
+    <script src="js/firebase/firebase-firestore-compat.js"></script>
+    
+    <!-- Load your application scripts -->
     <script src="js/keyGen.js"></script>
     <script src="js/encrypt.js"></script>
     <script src="js/decrypt.js"></script>
     <script src="js/bsk.js"></script>
-
+    
+    <!-- Load Firebase config and auth last -->
+    <script src="js/firebase-config.js"></script>
     <script src="js/auth.js"></script>
 
 </body>

@@ -44,17 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function logout() {
-    const token = localStorage.getItem("bsk_token");
-    fetch("http://api.eduvlan.ly/api/logout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({ type: 2 })
-    })
-      .then((res) => {
+    logoutWithFirebase()
+      .then(() => {
         localStorage.removeItem("bsk_token");
         masterPassword = null;
         clearAddEditFields();
@@ -97,22 +88,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     storedItems.forEach(item => {
-      const itemElement = document.createElement("div");
-      itemElement.classList.add("col-md-6", "item");
-      itemElement.innerHTML = `
-      <div class="p-3 border rounded shadow-sm h-100">
-        <small class="text-muted d-block">Name: ${item.name}</small>
-        <div class="d-grid gap-2 mt-5 mb-5">
-          <button class="btn btn-sm user-btn" data-id="${item.id}" type="button"><i class="fa-solid fa-user"></i></button>
-          <button class="btn btn-sm pass-btn" data-id="${item.id}" type="button"><i class="fa-solid fa-key"></i></button>
-        </div>
-        <div class="d-grid gap-2 mt-5 mb-5">
-          <button class="btn btn-sm edit-btn" type="button" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-          <button class="btn btn-sm delete-btn" type="button" data-id="${item.id}"><i class="fas fa-trash"></i></button>
-        </div>
-      </div>
-    `;
-      itemList.appendChild(itemElement);
+      if (item.id && item.id !== 'null') {
+        const itemElement = document.createElement("div");
+        itemElement.classList.add("col-md-6", "item");
+        itemElement.innerHTML = `
+          <div class="p-3 border rounded shadow-sm h-100">
+            <small class="text-muted d-block">Name: ${item.name || ''}</small>
+            <div class="d-grid gap-2 mt-5 mb-5">
+              <button class="btn btn-sm user-btn" data-id="${item.id}" type="button"><i class="fa-solid fa-user"></i></button>
+              <button class="btn btn-sm pass-btn" data-id="${item.id}" type="button"><i class="fa-solid fa-key"></i></button>
+            </div>
+            <div class="d-grid gap-2 mt-5 mb-5">
+              <button class="btn btn-sm edit-btn" type="button" data-id="${item.id}"><i class="fas fa-edit"></i></button>
+              <button class="btn btn-sm delete-btn" type="button" data-id="${item.id}"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+        `;
+        itemList.appendChild(itemElement);
+      }
     });
 
     //edit
@@ -143,46 +136,29 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".delete-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const itemId = btn.getAttribute("data-id");
-
         const modal = document.getElementById("confirmModal");
         modal.style.display = "flex";
 
         const confirmBtn = document.getElementById("confirmDeleteBtn");
         const cancelBtn = document.getElementById("cancelDeleteBtn");
 
-        const token = localStorage.getItem("bsk_token");
-
         confirmBtn.replaceWith(confirmBtn.cloneNode(true));
         cancelBtn.replaceWith(cancelBtn.cloneNode(true));
 
-        document.getElementById("confirmDeleteBtn").addEventListener("click", () => {
-          fetch(`http://api.eduvlan.ly/api/customer-item-delete/${itemId}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Authorization": `Bearer ${token}`
-            }
-          })
-            .then(async response => {
-              const data = await response.json();
-
-              if (response.ok) {
-                const items = JSON.parse(localStorage.getItem("customer_items") || "[]");
-                const updatedItems = items.filter(i => i.id != itemId);
-                localStorage.setItem("customer_items", JSON.stringify(updatedItems));
-                renderCustomerItemsFromLocalStorage();
-              } else {
-                alert(data.message || "Failed to delete item.");
-              }
-
-              modal.style.display = "none";
-            })
-            .catch(error => {
-              console.error("Delete error:", error);
-              alert("An error occurred. Please try again.");
-              modal.style.display = "none";
-            });
+        document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
+          const userId = localStorage.getItem("bsk_token");
+          try {
+            await deleteItem(userId, itemId);
+            const items = JSON.parse(localStorage.getItem("customer_items") || "[]");
+            const updatedItems = items.filter(i => i.id != itemId);
+            localStorage.setItem("customer_items", JSON.stringify(updatedItems));
+            renderCustomerItemsFromLocalStorage();
+            modal.style.display = "none";
+          } catch (error) {
+            console.error("Delete error:", error);
+            alert("Failed to delete item. Please try again.");
+            modal.style.display = "none";
+          }
         });
 
         document.getElementById("cancelDeleteBtn").addEventListener("click", () => {
@@ -285,27 +261,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function getCustomerItems() {
-    const token = localStorage.getItem("bsk_token");
+    const userId = localStorage.getItem("bsk_token");
     const itemList = document.querySelector(".item_list");
     itemList.innerHTML = "";
+    
     try {
-      const response = await fetch("http://api.eduvlan.ly/api/customer-items", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": `Bearer ${token}`
-        }
-      });
-
-      const data = await response.json();
-
-      if (response.ok && Array.isArray(data.data)) {
-        localStorage.setItem("customer_items", JSON.stringify(data.data));
-        renderCustomerItemsFromLocalStorage();
-      } else {
-        itemList.innerHTML = `<div class='col-12 text-danger text-center'>${data.message || "Failed to load items."}</div>`;
-      }
+      const items = await getItems(userId);
+      localStorage.setItem("customer_items", JSON.stringify(items));
+      renderCustomerItemsFromLocalStorage();
     } catch (error) {
       console.error("Fetch error:", error);
       itemList.innerHTML = `<div class='col-12 text-danger text-center'>Error loading items. Please try again.</div>`;
@@ -332,51 +295,30 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.getElementById("loginPass").value;
       const loginError = document.getElementById("loginError");
 
-      const payload = {
-        email: email,
-        password: password,
-        type: 2
-      };
-
       try {
-        const response = await fetch("http://api.eduvlan.ly/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
+        const user = await loginWithFirebase(email, password);
+        loginButton.disabled = false;
+        loginButton.innerText = "Login";
+        
+        chrome.runtime.sendMessage({
+          type: "SET_MASTER_PASSWORD",
+          payload: password
+        }, (response) => {
+          if (response && response.success) {
+            localStorage.setItem("bsk_token", user.uid);
+            document.getElementById("loginPass").value = "";
+            getCustomerItems();
+            showPage(dashboardPage);
+          } else {
+            alert("Unable to store master password. Please try again.");
+          }
         });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          loginButton.disabled = false;
-          loginButton.innerText = "Login";
-          chrome.runtime.sendMessage({
-            type: "SET_MASTER_PASSWORD",
-            payload: password
-          }, (response) => {
-            if (response && response.success) {
-              localStorage.setItem("bsk_token", data.data.token);
-              document.getElementById("loginPass").value = "";
-              getCustomerItems();
-              showPage(dashboardPage);
-            } else {
-              alert("Unable to store master password. Please try again.");
-            }
-          });
-        } else {
-          loginButton.disabled = false;
-          loginButton.innerText = "Login";
-          loginError.style.display = "block";
-          loginError.innerText = data.message || "Invalid credentials.";
-        }
       } catch (error) {
         console.error("Login error:", error);
         loginButton.disabled = false;
         loginButton.innerText = "Login";
         loginError.style.display = "block";
-        loginError.innerText = "An error occurred. Please try again.";
+        loginError.innerText = error.message || "Invalid credentials.";
       }
     });
   }
@@ -408,68 +350,41 @@ document.addEventListener("DOMContentLoaded", () => {
       registerPassError.innerText = "";
       registerPassConfirmError.innerText = "";
 
-      const payload = {
-        "email": email,
-        "password": password,
-        "password_confirmation": confirmPassword,
-        "type": 2
-      };
-      try {
-        const response = await fetch("http://api.eduvlan.ly/api/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          registerButton.disabled = false;
-          registerButton.innerText = "Register";
-          registerEmailError.innerText = "";
-          registerPassError.innerText = "";
-          registerPassConfirmError.innerText = "";
-          
-          const registerModal = document.getElementById('registerModal');
-          const registerModalMessage = document.getElementById('registerModalMessage');
-          const registerCloseModalBtn = document.getElementById('registerCloseModalBtn');
-          
-          registerModalMessage.textContent = "Registration successful! Please login.";
-          registerModal.style.display = 'flex';
-          
-          registerCloseModalBtn.addEventListener('click', () => {
-              registerModal.style.display = 'none';
-              showPage(loginPage);
-          });
-        } else {
-          if (data.errors) {
-            if (data.errors.email) {
-              registerEmailError.innerText = data.errors.email.join(" ");
-              registerEmailError.style.display = "block";
-            }
-            if (data.errors.password) {
-              registerPassError.innerText = data.errors.password.join(" ");
-              registerPassError.style.display = "block";
-            }
-            if (data.errors.password_confirmation) {
-              registerPassConfirmError.innerText = data.errors.password_confirmation.join(" ");
-              registerPassConfirmError.style.display = "block";
-            }
-          } else {
-            registerError.innerText = data.message || "Registration failed.";
-            registerError.style.display = "block";
-          }
-
-          registerButton.disabled = false;
-          registerButton.innerText = "Register";
-        }
+      if (password !== confirmPassword) {
+        registerPassConfirmError.innerText = "Passwords do not match";
+        registerButton.disabled = false;
+        registerButton.innerText = "Register";
+        return;
       }
-      catch (error) {
+
+      try {
+        await registerWithFirebase(email, password);
+        registerButton.disabled = false;
+        registerButton.innerText = "Register";
+        
+        const registerModal = document.getElementById('registerModal');
+        const registerModalMessage = document.getElementById('registerModalMessage');
+        const registerCloseModalBtn = document.getElementById('registerCloseModalBtn');
+        
+        registerModalMessage.textContent = "Registration successful! Please login.";
+        registerModal.style.display = 'flex';
+        
+        registerCloseModalBtn.addEventListener('click', () => {
+            registerModal.style.display = 'none';
+            showPage(loginPage);
+        });
+      } catch (error) {
         console.error("Registration error:", error);
         registerButton.disabled = false;
         registerButton.innerText = "Register";
+        
+        if (error.code === 'auth/email-already-in-use') {
+          registerEmailError.innerText = "Email already in use";
+        } else if (error.code === 'auth/weak-password') {
+          registerPassError.innerText = "Password is too weak";
+        } else {
+          registerEmailError.innerText = error.message;
+        }
       }
     });
   }
@@ -566,34 +481,78 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   if (encryptButton) {
-    encryptButton.addEventListener("click", () => {
+    encryptButton.addEventListener("click", async () => {
       const itemLink = document.getElementById("item_link").value;
       const itemEmail = document.getElementById("item_email").value;
       const itemPassword = document.getElementById("item_pass").value;
       const itemNote = document.getElementById("item_note").value;
       const enRoundText = document.getElementById("en_round").innerText;
       let en_round = parseInt(enRoundText) || 0;
+      const failedMsg = document.getElementById("failed_msg");
 
       en_round += 1;
 
-      chrome.runtime.sendMessage({ type: "GET_MASTER_PASSWORD" }, (response) => {
-        const masterPassword = response.password;
-
-        if (!masterPassword) {
-          alert("Session expired. Please log in again.");
-          logout();
+      // First check session status
+      chrome.runtime.sendMessage({ type: "CHECK_SESSION" }, async (sessionResponse) => {
+        if (!sessionResponse.valid) {
+          failedMsg.innerText = "Session expired. Please log in again.";
+          setTimeout(() => {
+            logout();
+          }, 1500);
+          return;
         }
 
-        const encryptedLink = bskEncrypt(itemLink, masterPassword);
-        const encryptedEmail = bskEncrypt(itemEmail, masterPassword);
-        const encryptedPass = bskEncrypt(itemPassword, masterPassword);
-        const encryptedNote = bskEncrypt(itemNote, masterPassword);
+        // If session was restored, show a notification
+        if (sessionResponse.restored) {
+          failedMsg.innerText = "Session restored automatically.";
+          setTimeout(() => {
+            failedMsg.innerText = "";
+          }, 2000);
+        }
 
-        document.getElementById("item_link").value = encryptedLink;
-        document.getElementById("item_email").value = encryptedEmail;
-        document.getElementById("item_pass").value = encryptedPass;
-        document.getElementById("item_note").value = encryptedNote;
-        document.getElementById("en_round").innerText = en_round;
+        // Get master password after confirming session is valid
+        chrome.runtime.sendMessage({ type: "GET_MASTER_PASSWORD" }, (response) => {
+          const masterPassword = response.password;
+
+          if (!masterPassword) {
+            failedMsg.innerText = "Unable to access encryption key. Please log in again.";
+            setTimeout(() => {
+              logout();
+            }, 1500);
+            return;
+          }
+
+          try {
+            // Split encryption into chunks for large inputs
+            const chunkSize = 1000; // Adjust this value based on testing
+            
+            const encryptChunk = (text) => {
+              if (!text) return "";
+              const chunks = text.match(new RegExp(`.{1,${chunkSize}}`, 'g')) || [];
+              return chunks.map(chunk => bskEncrypt(chunk, masterPassword)).join('||');
+            };
+
+            const encryptedLink = encryptChunk(itemLink);
+            const encryptedEmail = encryptChunk(itemEmail);
+            const encryptedPass = encryptChunk(itemPassword);
+            const encryptedNote = encryptChunk(itemNote);
+
+            document.getElementById("item_link").value = encryptedLink;
+            document.getElementById("item_email").value = encryptedEmail;
+            document.getElementById("item_pass").value = encryptedPass;
+            document.getElementById("item_note").value = encryptedNote;
+            document.getElementById("en_round").innerText = en_round;
+            failedMsg.innerText = "";
+          } catch (error) {
+            console.error("Encryption error:", error);
+            failedMsg.innerText = error.message;
+            if (error.message.includes("Please log in again")) {
+              setTimeout(() => {
+                logout();
+              }, 1500);
+            }
+          }
+        });
       });
     });
   }
@@ -636,7 +595,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  saveButton.addEventListener("click", () => {
+  saveButton.addEventListener("click", async () => {
     const itemName = document.getElementById("item_name").value;
     const itemLink = document.getElementById("item_link").value;
     const itemEmail = document.getElementById("item_email").value;
@@ -648,11 +607,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const failedMsg = document.getElementById("failed_msg");
 
     if (en_round <= 0) {
-      document.getElementById("failed_msg").innerText = "Please encrypt the data before saving.";
+      failedMsg.innerText = "Please encrypt the data before saving.";
       return;
     }
 
-    const payload = {
+    const userId = localStorage.getItem("bsk_token");
+    const editId = saveButton.getAttribute("data-edit-id");
+
+    const itemData = {
+      id: editId || null,
       name: itemName,
       link: itemLink,
       email: itemEmail,
@@ -661,39 +624,15 @@ document.addEventListener("DOMContentLoaded", () => {
       en_round: en_round
     };
 
-    const token = localStorage.getItem("bsk_token");
-    const editId = saveButton.getAttribute("data-edit-id");
-
-    const url = editId
-      ? `http://api.eduvlan.ly/api/customer-item-update/${editId}`
-      : "http://api.eduvlan.ly/api/customer-item-save";
-
-    const method = editId ? "PUT" : "POST";
-
-    fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify(payload)
-    })
-      .then(async (response) => {
-        const data = await response.json();
-
-        if (response.ok) {
-          clearAddEditFields();
-          successMsg.innerText = data.message || (editId ? "Item updated successfully." : "Item saved successfully.");
-          getCustomerItems();
-        } else {
-          failedMsg.innerText = data.message || "Failed to save item.";
-        }
-      })
-      .catch((error) => {
-        document.getElementById("success_msg").innerText = "";
-        failedMsg.innerText = "Unexpected error. Please try again.";
-      });
+    try {
+      await saveItem(userId, itemData);
+      clearAddEditFields();
+      successMsg.innerText = editId ? "Item updated successfully." : "Item saved successfully.";
+      getCustomerItems();
+    } catch (error) {
+      console.error("Save error:", error);
+      failedMsg.innerText = "Failed to save item. Please try again.";
+    }
   });
 
 

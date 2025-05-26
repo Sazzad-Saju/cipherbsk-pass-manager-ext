@@ -1,21 +1,37 @@
 {
     "manifest_version": 3,
-    "name": "Cipher BSK Pass Manager",
+    "name": "Cipher BSK Password Manager",
     "author": "Sazzad Saju",
     "version": "1.0",
     "description": "A lightweight password manager extension powered by Cipher-BSK — a custom, open-source encryption model developed by Sazzad Saju. It supports multilayer encryption with full user control over how data is secured. Encryption occurs locally; no plaintext or zero-encryption data is ever stored. Built on a published cryptographic scheme and openly challengeable, Cipher-BSK is designed for serious, everyday password protection. Learn more: https://bit.ly/cipher-bsk",
 
     "icons": {
+      "16": "img/bsk_icon.png",
       "48": "img/bsk_icon.png",
       "128": "img/bsk_icon.png"
     },
     "background": {
       "service_worker": "js/background.js"
     },
-    "permissions": ["storage", "clipboardWrite", "scripting"],
+    "permissions": [
+      "storage",
+      "clipboardWrite",
+      "identity"
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    },
     "action": {
       "default_popup": "popup.html",
-      "default_icon": "img/bsk_icon.png"
-    }
+      "default_icon": {
+        "16": "img/bsk_icon.png",
+        "48": "img/bsk_icon.png",
+        "128": "img/bsk_icon.png"
+      }
+    },
+    "web_accessible_resources": [{
+      "resources": ["img/*"],
+      "matches": ["<all_urls>"]
+    }]
   }
   
